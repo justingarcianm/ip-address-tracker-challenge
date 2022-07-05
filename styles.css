@@ -52,8 +52,9 @@ svg {
     justify-content: stretch;
     align-items: center;
     width: inherit;
+    max-width: 500px;
     gap: 0;
-    margin: 2rem;
+    margin: 2rem auto;
 }
 
 .header form > * {
@@ -108,20 +109,40 @@ svg {
     font-size: 25px;
 }
 
-#results {
-    opacity: 0;
-    pointer-events: none;
-    transition: all ease 300ms;
-}
-
-#results.active {
-    opacity: 1;
-    pointer-events: all;
+#results > div {
+    display:none;
 }
 #results > div.active {
-    display:grid
+    display:grid;
 }
 
+.loading h2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    text-align: center;
+    margin: 0 auto;
+    gap: 1rem;
+}
+
+.loading span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid;
+    border-color: var(--dark-gray) var(--dark-gray) var(--dark-gray) transparent;
+    animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 
 #results .error-display {
     display: none;
@@ -133,9 +154,12 @@ svg {
     padding:1rem;
     display: none;
     grid-template-columns: repeat(4,1fr);
-    align-items: center;
+    align-items: stretch;
     justify-content: start;
-    gap: 2rem;
+}
+
+#results .data-display > div {
+    padding: 0 2rem;
 }
 
 #results .data-display > div:not(:last-child) {

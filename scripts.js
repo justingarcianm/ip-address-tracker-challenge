@@ -7,14 +7,13 @@ function displayData(data) {
     const errDiv = resultsDiv.querySelector('.error-display')
     const displayDiv = resultsDiv.querySelector('.data-display')
     
-    resultsDiv.classList.add('active')
-    
+    resultsDiv.querySelector('.loading').classList.remove('active')
+
     if( data.code ) {
         errDiv.querySelector('p').innerHTML = data.messages
         errDiv.classList.add('active')
         displayDiv.classList.remove('active')
     }
-    console.log(data)
     displayDiv.querySelector('#ip-address p').innerHTML = data.ip
     displayDiv.querySelector('#location p').innerHTML = `${data.location.city}, ${data.location.region} ${data.location.postalCode}`
     displayDiv.querySelector('#timezone p').innerHTML = `UTC ${data.location.timezone}`
@@ -22,6 +21,10 @@ function displayData(data) {
 
     displayDiv.classList.add('active')
     errDiv.classList.remove('active')
+
+    let latLng = [data.location.lat, data.location.lng]
+    console.log(latLng)
+    return window.localStorage.setItem('coordinates', JSON.stringify(latLng))
 }
 
 async function getInputData (input) {
@@ -40,7 +43,7 @@ async function getInputData (input) {
 function handleSubmit(e) {
     e.preventDefault()
     const value = e.target.querySelector('input').value
-    return getInputData(value)
+    return getInputData(value, false)
 }
 
 function formSetup() {
@@ -49,30 +52,33 @@ function formSetup() {
     form.onsubmit = e => handleSubmit(e)
 }
 
-function mapSetup () {
-    // setup map container
-    let map = L.map('map').setView([51.505, -0.09], 13);
-    // populate map
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap'
-}).addTo(map);
+function mapSetup() {
 
-    // add marker
-    var myIcon = L.icon({
-        iconUrl: './images/icon-location.svg',
-        iconSize: [38, 45]
-    });
-    L.marker([51.505, -0.09], {icon: myIcon}).addTo(map);
+        let coordinates = JSON.parse(window.localStorage.getItem('coordinates'))
+
+        // setup map container
+        let map = L.map('map')
+        map.setView(coordinates, 13);
+        // populate map
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+    
+        // add marker
+        var myIcon = L.icon({
+            iconUrl: './images/icon-location.svg',
+            alt:'Marker',
+            iconSize: [38, 45]
+        });
+        let marker = L.marker(map.getCenter(), {icon: myIcon}).addTo(map);
 }
 
-function mapUpdate(update) {
-
-}
 
 window.onload = () => {
     // displays users current IP address
-    getInputData('')    
+    getInputData('', true)
+    .then( () => mapSetup() )    
     formSetup()
-    mapSetup()
+    
 }
