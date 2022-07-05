@@ -1,0 +1,153 @@
+:root {
+    --very-dark-gray:hsl(0, 0%, 17%);
+    --dark-gray:hsl(0, 0%, 59%);
+    --white:hsl(0,0%, 100%);
+    --main-size:18px;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing:border-box;
+    padding: 0;
+    margin:0;
+    font-family: 'Rubik', sans-serif;
+    color: var(--very-dark-gray);
+}
+
+body {
+    height: 100vh;
+    position: relative;
+}
+
+h1 {
+    font-weight: 700;
+    color: var(--white);
+    text-align: center;
+}
+
+img,
+svg {
+    width: 100%;
+}
+
+.container {
+    max-width:1440px;
+    width:95%;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.header {
+    height: 30%;
+    background-image: url(/images/pattern-bg.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.header form {
+    display: grid;
+    grid-template-columns: 96% 4%;
+    justify-content: stretch;
+    align-items: center;
+    width: inherit;
+    gap: 0;
+    margin: 2rem;
+}
+
+.header form > * {
+    border:none;
+    height: 50px;
+    padding: 2rem;
+    outline: 0;
+    font-size: var(--main-size);
+}
+
+.header form input {
+    border-radius: 15px 0 0 15px;
+    
+}
+
+.header form button {
+    border-radius: 0 15px 15px 0;
+    position: relative;
+    background-color: var(--very-dark-gray);
+    color: var(--white);
+    font-size: var(--main-size);
+    cursor: pointer;
+}
+
+.header form button img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    max-width: fit-content;
+}
+
+#results {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 1px 10px var(--dark-gray);
+}
+
+#results h2,
+#results h3 {
+    color: var(--dark-gray);
+    font-weight: 400;
+    font-size: 100%;
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+    margin-bottom: 1rem;
+}
+
+#results p {
+    font-weight: 700;
+    font-size: 25px;
+}
+
+#results {
+    opacity: 0;
+    pointer-events: none;
+    transition: all ease 300ms;
+}
+
+#results.active {
+    opacity: 1;
+    pointer-events: all;
+}
+#results > div.active {
+    display:grid
+}
+
+
+#results .error-display {
+    display: none;
+    place-items: center;
+    gap: 1rem;
+}
+
+#results .data-display {
+    padding:1rem;
+    display: none;
+    grid-template-columns: repeat(4,1fr);
+    align-items: center;
+    justify-content: start;
+    gap: 2rem;
+}
+
+#results .data-display > div:not(:last-child) {
+    border-right: 1px solid var(--dark-gray);
+}
+
+.map-section {
+    height: 70%;
+}
+
+#map {
+    height: 100%;
+    z-index: -1;
+}
+
