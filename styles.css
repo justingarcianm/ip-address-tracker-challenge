@@ -21,7 +21,7 @@ body {
 }
 
 h1 {
-    font-weight: 700;
+    font-weight: 500;
     color: var(--white);
     text-align: center;
 }
@@ -48,13 +48,15 @@ svg {
 
 .header form {
     display: grid;
-    grid-template-columns: 96% 4%;
+    grid-template-columns: 90% 10%;
     justify-content: stretch;
     align-items: center;
     width: inherit;
-    max-width: 500px;
+    max-width: 600px;
     gap: 0;
     margin: 2rem auto;
+    box-shadow: 0 1px 10px var(--vary-dark-gray);
+    border-radius:15px;
 }
 
 .header form > * {
@@ -67,7 +69,10 @@ svg {
 
 .header form input {
     border-radius: 15px 0 0 15px;
-    
+}
+
+.header form input::placeholder {
+    color: var(--dark-gray);
 }
 
 .header form button {
@@ -105,8 +110,8 @@ svg {
 }
 
 #results p {
-    font-weight: 700;
-    font-size: 25px;
+    font-weight: 500;
+    font-size: 24px;
 }
 
 #results > div {
@@ -173,5 +178,25 @@ svg {
 #map {
     height: 100%;
     z-index: -1;
+}
+
+@media (max-width:900px){
+    .header form {
+        grid-template-columns:75% 25%;
+    }
+    #results .data-display {
+        grid-template-columns: 1fr;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    #results .data-display > div {
+        padding: 1rem 0;
+    }
+
+    #results .data-display > div:not(:last-child) {
+        border-right: none;
+    }
 }
 
